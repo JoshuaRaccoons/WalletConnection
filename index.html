@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="index.css" type="text/css">
+  <script src="https://unpkg.com/@solana/web3.js@v1.33.0/lib/index.iife.js"></script>
+</head>
+
+<body>
+
+  <div class="column">
+    <button id="connect_button" class="button-9" onclick="connectWallet()">Connect</button>
+    <p id="status_p"><span id="status"></span></p>
+  </div>
+  <script>
+    var wallet;
+    const lamports_per_sol = solanaWeb3.LAMPORTS_PER_SOL;
+    function connectWallet() {
+      (async () => {
+        try {
+          console.log(window)
+          wallet = await window.solana.connect();
+        } catch (err) {
+          console.log(err);
+        }
+      })();
+      window.solana.on(
+        "connect",
+        () => (
+          document.getElementById("connect_button").innerText = "Connected"
+        )
+      );
+    }
+
+
+    function ellipsizeAddress(str) {
+      if (str.length > 35) {
+        return str.substr(0, 8) + '...' + str.substr(str.length - 8, str.length);
+      }
+      return str;
+    }
+
+  </script>
+</body>
+
+</html>
